@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-const chalk = require('chalk')
-const clipboardy = require('clipboardy')
-const log = console.log
-const createPassword = require('./utils/createPassword')
-const savePassword = require('./utils/savePassword')
 
-const { Command } = require('commander');
+import chalk from 'chalk';
+import clipboardy from 'clipboardy';
+import { Command } from 'commander';
+import createPassword from './utils/createPassword.js';
+import savePassword from './utils/savePassword.js';
+
+const log = console.log;
 const program = new Command();
 
 program
@@ -18,18 +19,26 @@ program
   .option('-s, --save', 'save password to passwords.txt')
   .option('-nn, --no-numbers', 'remove numbers')
   .option('-ns, --no-symbols', 'remove symbols')
-  .parse()
+  .parse();
 
-const { length, save, numbers, symbols } = program.opts();
+const { length, save, numbers, symbols } = program.opts<{
+  length: string,
+  save: boolean,
+  numbers: boolean,
+  symbols: boolean
+}>();
+
+// Convert length to a number
+const passwordLength = parseInt(length, 10);
 
 // Get Generated Password
-const generatedPassword = createPassword(length, numbers, symbols);
+const generatedPassword = createPassword(passwordLength, numbers, symbols);
 
 // Save to file
 if (save) {
     savePassword(generatedPassword);
 }
-  
+
 // Copy to clipboard
 clipboardy.writeSync(generatedPassword);
 

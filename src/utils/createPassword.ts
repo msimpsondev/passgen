@@ -2,7 +2,7 @@ const alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const numbers = '0123456789';
 const symbols = '!@#$%^&*_-+=';
 
-const createPassword = (length = 8, hasNumbers = true, hasSymbols = true) => {
+const createPassword = (length: number = 8, hasNumbers: boolean = true, hasSymbols: boolean = true): string => {
   let chars = alpha;
   if (hasNumbers) {
     chars += numbers;
@@ -13,7 +13,7 @@ const createPassword = (length = 8, hasNumbers = true, hasSymbols = true) => {
   return generatePassword(length, chars);
 };
 
-const generatePassword = (length, chars) => {
+const generatePassword = (length: number, chars: string): string => {
   let password = '';
   for (let i = 0; i < length; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -21,4 +21,4 @@ const generatePassword = (length, chars) => {
   return password;
 };
 
-module.exports = createPassword;
+export default createPassword;
